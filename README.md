@@ -14,11 +14,11 @@
 - `bazel clean` - clean all
 - `bazel build //...` / `bazel build //:all` - build all targets
 - `bazel build //project-application:all` - build all targets within `project-application` build
-- `bazel build //project-application:ScalaApplication` - build `ScalaApplication` target within `project-application`
+- `bazel build //project-application:app` - build `app` target within `project-application`
   build
-- `bazel run //project-application:ScalaApplication` - run binary target `ScalaApplication` within `project-application`
+- `bazel run //project-application:app` - run binary target `app` within `project-application`
   build
-- `bazel build //project-application:ScalaApplication_deploy.jar` - build fat-jar with all dependencies so that it can
+- `bazel build //project-application:app_deploy.jar` - build fat-jar with all dependencies so that it can
   be run with `java -jar ...`
 - `bazel run @maven//:pin` - initialize pinning artifacts and their SHA-256 checksums into `maven_install.json`
 - `bazel run @unpinned_maven//:pin` - update maven_install.json
