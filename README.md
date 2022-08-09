@@ -110,6 +110,10 @@ artifacts as outputs.
 2. Change `application.domain.greeter.Greeter`
 3. Run tests again  
    Notice that only tests from `greeter` package were run.
+4. Generate dependency graph  
+   `bazel query --noimplicit_deps --notool_deps 'deps(//...)' --output graph | dot -Tpng > graph.png`  
+   Notice that `//project-applicaiton:app` depends on `greeter` and `sequence` separately.  
+   Additionally, `greeter` consists of two sources.
 
 ## To do:
 
