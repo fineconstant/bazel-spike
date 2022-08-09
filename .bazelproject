@@ -1,0 +1,24 @@
+directories:
+  .
+  -.bazelbsp
+  -.bsp
+  -.idea
+  -.ijwb
+  -.metals
+  -.run
+  -.vscode
+  -bazel-bazel-spike
+  -bazel-bin
+  -bazel-out
+  -bazel-testlogs
+
+# Automatically includes all relevant targets under the 'directories' above
+derive_targets_from_directories: true
+
+targets:
+  # If source code isn't resolving, add additional targets that compile it here
+
+workspace_type: java
+
+additional_languages:
+  scala

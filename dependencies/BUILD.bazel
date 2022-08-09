@@ -1,0 +1,27 @@
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_library")
+
+scala_library(
+    name = "akka",
+    visibility = [
+        "//visibility:public",
+    ],
+    exports = [
+        "@maven//:com_typesafe_akka_akka_actor_2_13",
+        "@maven//:com_typesafe_akka_akka_actor_typed_2_13",
+        "@maven//:com_typesafe_akka_akka_http_2_13",
+        "@maven//:com_typesafe_akka_akka_http_core_2_13",
+        "@maven//:com_typesafe_akka_akka_stream_2_13",
+    ],
+)
+
+scala_library(
+    name = "test",
+    testonly = True,
+    visibility = [
+        "//visibility:public",
+    ],
+    exports = [
+        "@maven//:org_scalamock_scalamock_2_13",
+        "@maven//:org_scalatest_scalatest_flatspec_2_13",
+    ],
+)

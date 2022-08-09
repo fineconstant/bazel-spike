@@ -1,0 +1,11 @@
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_test_suite")
+
+scala_test_suite(
+    name = "test",
+    size = "small",
+    srcs = glob(["**/*.scala"]),
+    deps = [
+        "//dependencies:test",
+        "//project-application/src/main/scala/application/domain/sequence:lib",
+    ],
+)

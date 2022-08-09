@@ -1,0 +1,11 @@
+.bazelbsp
+.bsp
+.idea
+.ijwb/.blaze
+.ijwb/.idea
+.metals
+.vscode
+bazel-bazel-spike
+bazel-bin
+bazel-out
+bazel-testlogs

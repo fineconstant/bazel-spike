@@ -1,0 +1,103 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# Bazel Starlak Language
+# version: https://github.com/bazelbuild/bazel-skylib/releases/
+skylib_version = "1.2.1"
+
+http_archive(
+    name = "bazel_skylib",
+    type = "tar.gz",
+    url = "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/{}/bazel-skylib-{}.tar.gz".format(skylib_version, skylib_version),
+)
+
+# Bazel Rules Scala plugin
+# version: commit hash https://github.com/bazelbuild/rules_scala
+rules_scala_version = "972fdf2b3bda64138db34a630a9910eee96b4d8a"
+
+http_archive(
+    name = "io_bazel_rules_scala",
+    strip_prefix = "rules_scala-%s" % rules_scala_version,
+    type = "zip",
+    url = "https://github.com/bazelbuild/rules_scala/archive/%s.zip" % rules_scala_version,
+)
+
+# Declare Scala version
+load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
+
+scala_config(scala_version = "2.13.8")
+
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+
+scala_repositories()
+
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+
+rules_proto_dependencies()
+
+rules_proto_toolchains()
+
+load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+
+scala_register_toolchains()
+
+load("@io_bazel_rules_scala//testing:scalatest.bzl", "scalatest_repositories", "scalatest_toolchain")
+
+scalatest_repositories()
+
+scalatest_toolchain()
+
+# Configure rules_jvm_external to resolve Maven dependencies
+# https://github.com/bazelbuild/rules_jvm_external#usage
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+RULES_JVM_EXTERNAL_TAG = "4.2"
+
+RULES_JVM_EXTERNAL_SHA = "cd1a77b7b02e8e008439ca76fd34f5b07aecb8c752961f9640dea15e9e5ba1ca"
+
+http_archive(
+    name = "rules_jvm_external",
+    sha256 = RULES_JVM_EXTERNAL_SHA,
+    strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
+    url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
+)
+
+load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
+
+rules_jvm_external_deps()
+
+load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
+
+rules_jvm_external_setup()
+
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+
+# maven.artifact(...) helper
+load("@rules_jvm_external//:specs.bzl", "maven")
+
+maven_install(
+    artifacts = [
+        "com.typesafe.akka:akka-actor-typed_2.13:2.6.19",
+        "com.typesafe.akka:akka-http_2.13:10.2.9",
+        "com.typesafe.akka:akka-stream_2.13:2.6.19",
+        maven.artifact(
+            "org.scalatest",
+            "scalatest-flatspec_2.13",
+            "3.2.13",
+            testonly = True,
+        ),
+        maven.artifact(
+            "org.scalamock",
+            "scalamock_2.13",
+            "5.2.0",
+            testonly = True,
+        ),
+    ],
+    fetch_sources = True,
+    maven_install_json = "@//:maven_install.json",
+    repositories = ["https://repo1.maven.org/maven2"],
+)
+
+# Maven pinned dependencies
+load("@maven//:defs.bzl", "pinned_maven_install")
+
+pinned_maven_install()

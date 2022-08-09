@@ -1,0 +1,20 @@
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_library", "scala_test_suite")
+
+scala_library(
+    name = "lib",
+    srcs = glob(["src/main/scala/library/**/*.scala"]),
+    resources = glob(["src/main/resources/**/*"]),
+    visibility = ["//project-application:__subpackages__"],
+    deps = [],
+)
+
+scala_test_suite(
+    name = "test",
+    size = "small",
+    srcs = glob(["src/test/scala/library/**/*.scala"]),
+    resources = glob(["src/test/resources/**/*"]),
+    deps = [
+        ":lib",
+        "//dependencies:test",
+    ],
+)
