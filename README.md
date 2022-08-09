@@ -113,7 +113,8 @@ artifacts as outputs.
 4. Generate dependency graph  
    `bazel query --noimplicit_deps --notool_deps 'deps(//...)' --output graph | dot -Tpng > graph.png`  
    Notice that `//project-applicaiton:app` depends on `greeter` and `sequence` separately.  
-   Additionally, `greeter` consists of two sources.
+   Additionally, `greeter` consists of two sources.  
+   Separate graph branches can be run in parallel.
 
 ## To do:
 
