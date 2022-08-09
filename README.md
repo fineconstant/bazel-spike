@@ -122,3 +122,4 @@ artifacts as outputs.
   [higherkindness/rules_scala](https://github.com/higherkindness/rules_scala/blob/master/docs/scalafmt.md)
     - How to integrate it with `bazelbuild/rules_scala`?
 - Docker image - manual build using bash script - put compiled package into an image
+    - [rules_docker](https://github.com/bazelbuild/rules_docker) official plugin for Docker images
